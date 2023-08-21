@@ -10,10 +10,11 @@ const httpStatusCodes = require("../utils/http-status-codes");
 // @access Public
 const register = async (req, res, next) => {
   console.log(process.env.SENDGRID_API_KEY);
-  const { username, password } = req.body;
+  const { username } = req.body;
+  const originalPassword = req.body.password;
 
   try {
-    if (!password) {
+    if (!originalPassword) {
       return res.status(httpStatusCodes.UNPROCESSABLE_ENTITY).json({
         status: "fail",
         msg: "Password missing required field.",
@@ -39,7 +40,7 @@ const register = async (req, res, next) => {
         )
       );
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(originalPassword, 10);
 
     const newUser = await new User({
       username: username,
@@ -48,11 +49,13 @@ const register = async (req, res, next) => {
 
     const createdUser = await newUser.save();
 
+    const { password, __v, ...others } = createdUser._doc;
+
     console.log(createdUser);
     res.status(httpStatusCodes.CREATED).json({
       status: "success",
       msg: "Account created!",
-      data: createdUser,
+      data: others,
     });
   } catch (error) {
     if (!error.statusCode) {
@@ -103,7 +106,8 @@ const login = async (req, res, next) => {
       { expiresIn: "1h" }
     );
     // Destructures out password from the existing-user object
-    const { password, isAdmin, ...others } = existingUser._doc;
+    const { password, createdAt, updatedAt, __v, ...others } =
+      existingUser._doc;
 
     res
       .cookie("accessToken", token, {

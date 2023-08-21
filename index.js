@@ -1,4 +1,3 @@
-// const db = require("./src/models");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8040;
 const HOST = "0.0.0.0";
