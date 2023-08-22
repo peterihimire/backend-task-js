@@ -5,7 +5,7 @@ require("dotenv").config();
 const BaseError = require("../utils/base-error");
 const httpStatusCodes = require("../utils/http-status-codes");
 
-// @route POST api/auth/verify-email
+// @route POST api/auth/register
 // @desc verify email
 // @access Public
 const register = async (req, res, next) => {
@@ -65,16 +65,17 @@ const register = async (req, res, next) => {
   }
 };
 
-// @route POST api/auth/verify-email
-// @desc verify email
+// @route POST api/auth/login
+// @desc login user
 // @access Public
 const login = async (req, res, next) => {
-  const { username } = req.body;
+  // const { username } = req.body;
+  const originalUsername = req.body.username;
   const originalPassword = req.body.password;
 
   try {
     const existingUser = await User.findOne({
-      email: username,
+      username: originalUsername,
     });
     if (!existingUser) {
       return next(
@@ -103,21 +104,23 @@ const login = async (req, res, next) => {
         id: existingUser.id,
       },
       process.env.JWT_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "5m" }
     );
-    // Destructures out password from the existing-user object
+
     const { password, createdAt, updatedAt, __v, ...others } =
       existingUser._doc;
 
     res
       .cookie("accessToken", token, {
-        httpOnly: true,
+        secure: false,
+        httpOnly: true, //cannot be accessed by javascript
+        maxAge: 1000 * 60 * 5,
       })
       .status(httpStatusCodes.OK)
       .json({
         status: "success",
         msg: "You are logged in!",
-        data: { ...others, token },
+        data: { ...others },
       });
   } catch (error) {
     if (!error.statusCode) {

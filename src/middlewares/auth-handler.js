@@ -1,12 +1,16 @@
 const { verify } = require("jsonwebtoken");
-const httpStatusCodes = require("./http-status-codes");
+const httpStatusCodes = require("../utils/http-status-codes");
 const BaseError = require("../utils/base-error");
 
 const verifyToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
+  // const authHeader = req.headers["authorization"];
+  const authCookie = req.headers["cookie"];
+  console.log("This is the auth cookie...", authCookie);
 
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
+  if (authCookie) {
+    // const token = authCookie.split(" ")[1];
+    const token = authCookie.split("=")[1];
+    console.log("This is the token...", token);
     verify(token, process.env.JWT_KEY, (err, user) => {
       if (err)
         return res
@@ -25,7 +29,7 @@ const verifyToken = (req, res, next) => {
 // USER AUTHORIZATION
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.id === req.params.userId) {
+    if (req.user.id === (req.params.userId || req.body.userId)) {
       next();
     } else {
       return next(
