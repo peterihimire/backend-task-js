@@ -1,6 +1,8 @@
 # BACKEND TASK JS
 
-This is a node.js RestAPI task application powered by NodeJS, Express and MongoDB that provides the main functions you'd expect from a chat, such as emojis, private messages, an admin system, etc.
+This is a Node.JS RestAPI task application powered by NodeJS, Express and MongoDB. The API will serve as the backend for a user management system.When a user is authenticated, an authorization token is added to the header cookies automatically, which has a maxAge of 15 minutes. 
+
+Authentication token is added in the header cookie for security reasons, which easily implies that 
 
 ![Node API Preview](https://res.cloudinary.com/dymhdpka1/image/upload/v1692715763/Screenshot_2023-08-22_at_3.37.22_PM_stqqyc.png)
 
@@ -8,11 +10,12 @@ This is a node.js RestAPI task application powered by NodeJS, Express and MongoD
 
 ## Table of contents
 
-- [General info](#general-info)
-- [Technologies](#technologies)
+- [Dependencies](#dependencies)
+- [Features](#features)
 - [Setup](#setup)
-- [Sources](#sources)
-- [Demo](#demo)
+- [Usage](#usage)
+- [License](#license)
+- [Postman Documentation](#postman-documentation)
 
 ---
 
@@ -37,7 +40,7 @@ This is a node.js RestAPI task application powered by NodeJS, Express and MongoD
 - **Register:** Users can register with their username and password
 - **Login:** Registered users can login with their username and password
 - **Dashboard:** This is a protected route only authenticated and authorized users can access it
-- **Logout:** All the above plus send global alerts and promote/demote users
+- **Logout:** Clears the cookie in the browser header and un-authenticates the user.
 
 <!-- ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692715763/Screenshot_2023-08-22_at_3.38.31_PM_vyegaa.png) -->
 
@@ -91,4 +94,5 @@ To give yourself administrator permissions on the chat, you will have to type `/
 This project is licensed under the terms of the **MIT** license.
 
 ## Postman Documentation
-Click this [link](https://documenter.getpostman.com/view/12340633/2s9Y5VSiGa) for the postman documentation of this test.
+
+Click this [link](https://documenter.getpostman.com/view/12340633/2s9Y5VSiGa) to access the postman documentation of this Backend API task.

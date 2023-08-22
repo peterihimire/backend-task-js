@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const { sign, verify } = require("jsonwebtoken");
+const { hashPassword, comparePassword } = require("../utils/helpers");
+const { sign } = require("jsonwebtoken");
 require("dotenv").config();
 const BaseError = require("../utils/base-error");
 const httpStatusCodes = require("../utils/http-status-codes");
@@ -9,7 +10,6 @@ const httpStatusCodes = require("../utils/http-status-codes");
 // @desc verify email
 // @access Public
 const register = async (req, res, next) => {
-  console.log(process.env.SENDGRID_API_KEY);
   const { username } = req.body;
   const originalPassword = req.body.password;
 
@@ -40,18 +40,16 @@ const register = async (req, res, next) => {
         )
       );
     }
-    const hashedPassword = await bcrypt.hash(originalPassword, 10);
 
-    const newUser = await new User({
+    const hashedPassword = hashPassword(originalPassword);
+
+    const createdUser = await User.create({
       username: username,
       password: hashedPassword,
     });
 
-    const createdUser = await newUser.save();
-
     const { password, __v, ...others } = createdUser._doc;
 
-    console.log(createdUser);
     res.status(httpStatusCodes.CREATED).json({
       status: "success",
       msg: "Account created!",
@@ -86,7 +84,12 @@ const login = async (req, res, next) => {
       );
     }
 
-    const hashedPassword = await bcrypt.compare(
+    // const hashedPassword = await bcrypt.compare(
+    //   originalPassword,
+    //   existingUser.password
+    // );
+
+    const hashedPassword = comparePassword(
       originalPassword,
       existingUser.password
     );
@@ -114,7 +117,7 @@ const login = async (req, res, next) => {
       .cookie("accessToken", token, {
         secure: false,
         httpOnly: true, //cannot be accessed by javascript
-        maxAge: 1000 * 60 * 5,
+        maxAge: 1000 * 60 * 5, //expires in 5 minutes
       })
       .status(httpStatusCodes.OK)
       .json({
