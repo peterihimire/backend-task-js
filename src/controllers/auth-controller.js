@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
 const { hashPassword, comparePassword } = require("../utils/helpers");
 const { sign } = require("jsonwebtoken");
 require("dotenv").config();
@@ -67,7 +66,6 @@ const register = async (req, res, next) => {
 // @desc login user
 // @access Public
 const login = async (req, res, next) => {
-  // const { username } = req.body;
   const originalUsername = req.body.username;
   const originalPassword = req.body.password;
 
@@ -83,11 +81,6 @@ const login = async (req, res, next) => {
         )
       );
     }
-
-    // const hashedPassword = await bcrypt.compare(
-    //   originalPassword,
-    //   existingUser.password
-    // );
 
     const hashedPassword = comparePassword(
       originalPassword,
