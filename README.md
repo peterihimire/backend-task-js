@@ -6,7 +6,7 @@ Authenticated JWToken is added in the header cookie for security reasons, which 
 
 This secures the JWToken and prevents Cross Site Scripting (XSS) attack. Because JavaScript cannot access it.
 
-![Node API Preview](https://res.cloudinary.com/dymhdpka1/image/upload/v1692715763/Screenshot_2023-08-22_at_3.37.22_PM_stqqyc.png)
+<!-- ![Node API Preview](https://res.cloudinary.com/dymhdpka1/image/upload/v1692715763/Screenshot_2023-08-22_at_3.37.22_PM_stqqyc.png) -->
 
 ---
 
