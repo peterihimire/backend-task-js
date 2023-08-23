@@ -75,18 +75,129 @@ Server is running on http://0.0.0.0:8040
 MongoDB database connected...
 ```
 
-To test the API endpoints you can use postman or insomnia, you can add to your global environment variable this base url: `http://127.0.0.1:8040/api/backend_task/v1` and name it whatever you wish mine is `{{BTAPI}}`. Save it and proceed to test the api.
+To test the API endpoints you can use postman or insomnia, you can add to your global environment variable for the base url: `http://127.0.0.1:8040/api/backend_task/v1` and name it whatever you wish, mine is `{{BTAPI}}`. Save it and proceed to test the api.
 
-- **Test Endpoint:** Use this endpoint to test if the API is working , you will get a response message `Welcome, Test API was initiated successfully!`
+- **Test Endpoint:** Use this endpoint to test if the API is working , for success and fail you will get the following responses
+
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.08.49_PM_vu5nws.png)
-- **Register Endpoint:** Users can register in the management system application with their username and password which are required fields
+
+   ```js
+  {
+    "status": "success",
+    "msg": "Welcome, Test API was initiated successfully!"
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Could not find this route, make sure the URL is correct !"
+  }
+  ```
+
+- **Register Endpoint:** Users can register in the management system application with their username and password which are required fields. Success and fail responses are below
+
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.06.15_PM_b6whkn.png)
-- **Login Endpoint:** Registered users can authenticate with their username and password, JWT sent from the server is saved in the header cookie
+
+  ```js
+  {
+    "status": "success",
+    "msg": "Account created!",
+    "data": {
+        "username": "eromz",
+        "_id": "64e67b3efd3fc255a0f14c51",
+        "createdAt": "2023-08-23T21:33:50.269Z",
+        "updatedAt": "2023-08-23T21:33:50.269Z"
+    }
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Account already exist, login instead ."
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Username missing required field."
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Password missing required field."
+  }
+  ```
+
+- **Login Endpoint:** Registered users can authenticate with their username and password, JWT sent from the server is saved in the header cookie. Success and fail will show below responses.
+
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.06.48_PM_lewlpb.png)
-- **Dashboard Endpoint:** This is a protected route only authenticated and authorized users can access it. You will need to be logged in, provide your `userId` and with the help of the JWT saved in the cookie header, attached automatically to the request header from the browser for every request made to the server you will be able to access your dashboard
+
+  ```js
+  {
+    "status": "success",
+    "msg": "You are logged in!",
+    "data": {
+        "_id": "64e526a69b9f5b604e1865d9",
+        "username": "anslem"
+    }
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Account does not exist , please signup for an account ."
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "Wrong password or username!"
+  }
+  ```
+
+- **Dashboard Endpoint:** This is a protected route only authenticated and authorized users can access it. You will need to be authenticated and secondly provide your `"userId": "604fad56ofkldsf900903ikank78"` for authorization. With the help of the JWT  attached to the cookie header implicitly, every request sent to server will be authenticated until it expires or manually cleared when logged out.
+
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796575/Screenshot_2023-08-23_at_2.08.05_PM_f2uk5s.png)
+
+  ```js
+  {
+    "status": "success",
+    "msg": "Dashboard info.",
+    "data": "Welcome to your dashboard, anslem"
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "You are not authenticated!"
+  }
+  ```
+
+  ```js
+  {
+    "status": "fail",
+    "msg": "You are not authorized to perform this operation!"
+  }
+  ```
+  
 - **Logout Endpoint:** Clears the cookie in the browser header and un-authenticates the user.
+
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.07.38_PM_k2pqrg.png)
+
+  ```js
+    {
+      "status": "success",
+      "msg": "You are logged out!"
+    }
+  ```
 
 ---
 

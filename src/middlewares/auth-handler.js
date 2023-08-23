@@ -15,14 +15,14 @@ const verifyToken = (req, res, next) => {
       if (err)
         return res
           .status(httpStatusCodes.FORBIDDEN)
-          .json("Expired or invalid token!");
+          .json({ status: "fail", msg: "Expired or invalid token!" });
       req.user = user;
       next();
     });
   } else {
     return res
       .status(httpStatusCodes.UNAUTHORIZED)
-      .json("You are not authenticated!");
+      .json({ status: "fail", msg: "You are not authenticated!" });
   }
 };
 
