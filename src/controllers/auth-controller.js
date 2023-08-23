@@ -100,7 +100,7 @@ const login = async (req, res, next) => {
         id: existingUser.id,
       },
       process.env.JWT_KEY,
-      { expiresIn: "5m" }
+      { expiresIn: "15m" }
     );
 
     const { password, createdAt, updatedAt, __v, ...others } =
@@ -110,7 +110,7 @@ const login = async (req, res, next) => {
       .cookie("accessToken", token, {
         secure: false,
         httpOnly: true, //cannot be accessed by javascript
-        maxAge: 1000 * 60 * 5, //expires in 5 minutes
+        maxAge: 1000 * 60 * 15, //expires in 5 minutes
       })
       .status(httpStatusCodes.OK)
       .json({
