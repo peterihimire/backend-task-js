@@ -1,5 +1,18 @@
 # BACKEND TASK JS
 
+## Table of contents
+
+- [General info](#general-info)
+- [Dependencies](#dependencies)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Test](#test)
+- [Postman Doc](#postman-documentation)
+
+---
+
+## General Info
+
 This is a Node.JS RestAPI task application powered by NodeJS, Express and MongoDB. The API will serve as the backend for a user management system.When a user is authenticated, an authentication JWToken is added to the header cookies automatically, which has a maxAge of 15 minutes.
 
 Authenticated JWToken is added in the header cookie for security reasons, which easily implies that, the server will send the cookie to the the browser, and the browser will take the responsibility to add the cookie JWToken for each request made to the server.
@@ -10,17 +23,7 @@ This secures the JWToken and prevents Cross Site Scripting (XSS) attack. Because
 
 ---
 
-## Table of contents
-
-<!-- - [Dependencies](#dependencies) -->
-- [Setup](#setup)
-- [Usage](#usage)
-- [Test](#test)
-- [Postman Doc](#postman-documentation)
-
----
-
-<!-- ## Dependencies
+## Dependencies
 
 - "bcryptjs": "^2.4.3",
 - "cookie-parser": "^1.4.6",
@@ -35,13 +38,13 @@ This secures the JWToken and prevents Cross Site Scripting (XSS) attack. Because
 - "nodemon": "^3.0.1",
 - "supertest": "^6.3.3"
 
---- -->
+---
 
 ## Setup
 
-Clone this repo to your desktop with $`git clone https://github.com/thecodec/recallo_lite_bkend`
+Clone this repo to your desktop with $`git clone https://github.com/peterihimire/backend-task-js`
 
-Change directory into the folder $`cd recallo_lite_bkend`
+Change directory into the folder $`cd backend-task-js`
 
 Create a .env file $`touch .env`
 
@@ -59,7 +62,7 @@ Copy these to your `.env file` and feel free to customize according to your need
 
 ## Usage
 
-After you clone this repo to your desktop, go to its root directory and run $`npm install` to install its dependencies.
+After you've cloned this repo to your desktop, added your .env file and wired up your mongodb connection string to the .env file, go to its root directory and run $`npm install` to install its dependencies.
 
 Once the dependencies are installed, you can run $`npm run dev` to start the application.
 
@@ -81,10 +84,10 @@ To test the API endpoints you can use postman or insomnia, you can add to your g
 
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.08.49_PM_vu5nws.png)
 
-   ```js
+  ```js
   {
-    "status": "success",
-    "msg": "Welcome, Test API was initiated successfully!"
+   "status": "success",
+   "msg": "Welcome, Test API was initiated successfully!"
   }
   ```
 
@@ -162,7 +165,7 @@ To test the API endpoints you can use postman or insomnia, you can add to your g
   }
   ```
 
-- **Dashboard Endpoint:** This is a protected route only authenticated and authorized users can access it. You will need to be authenticated and secondly provide your `"userId": "604fad56ofkldsf900903ikank78"` for authorization. With the help of the JWT  attached to the cookie header implicitly, every request sent to server will be authenticated until it expires or manually cleared when logged out.
+- **Dashboard Endpoint:** This is a protected route only authenticated and authorized users can access it. You will need to be authenticated and secondly provide your `"userId": "604fad56ofkldsf900903ikank78"` for authorization. With the help of the JWT attached to the cookie header implicitly, every request sent to server will be authenticated until it expires or manually cleared when logged out.
 
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796575/Screenshot_2023-08-23_at_2.08.05_PM_f2uk5s.png)
 
@@ -187,7 +190,7 @@ To test the API endpoints you can use postman or insomnia, you can add to your g
     "msg": "You are not authorized to perform this operation!"
   }
   ```
-  
+
 - **Logout Endpoint:** Clears the cookie in the browser header and un-authenticates the user.
 
   ![Cookie](https://res.cloudinary.com/dymhdpka1/image/upload/v1692796574/Screenshot_2023-08-23_at_2.07.38_PM_k2pqrg.png)
